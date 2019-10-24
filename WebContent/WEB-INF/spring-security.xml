@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<import resource="model-layer.xml"/>
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*" />
+			<bean id="webContentInterceptor"
+				class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<property name="cacheSeconds" value="0" />
+				<property name="useExpiresHeader" value="true" />
+				<property name="useCacheControlHeader" value="true" />
+				<property name="useCacheControlNoStore" value="true" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<security:http auto-config="true">
+	<security:form-login
+		    login-page="/login"
+		    default-target-url="/"
+			authentication-failure-url="/login?error"
+			username-parameter="username"
+			password-parameter="password" />
+		<security:logout logout-url="/logout" logout-success-url="/login?logout"  />
+		<!-- enable csrf protection -->
+		<security:intercept-url pattern="/account" access="ROLE_ADMIN" />
+			
+	</security:http>
+
+<!-- 	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="himanshu" password="himanshu" authorities="ROLE_USER" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+	-->
+	<security:authentication-manager>
+	  <security:authentication-provider>
+		<security:jdbc-user-service data-source-ref="dataSource"
+		  users-by-username-query=
+		    "select username,password, enabled from UserHS123 where username=?"
+		  authorities-by-username-query=
+		    "select username, roles from UserRole123 where username =?  " />
+	  </security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>
