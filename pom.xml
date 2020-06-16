@@ -8,7 +8,7 @@
   <name>bank Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
-		<org.springframework.version>4.0.2.RELEASE</org.springframework.version>
+		<org.springframework.version>5.2.7.RELEASE</org.springframework.version>
 		<spring.security.version>3.2.3.RELEASE</spring.security.version>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		
