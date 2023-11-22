@@ -1,0 +1,26 @@
+**Important Point**
+------------------------
+
+For construction injection we don't need to write @aurowire
+
+**Annotation used**
+--------------------------
+@RestController
+
+**For Mapping**
+
+@Mapping
+@RequestMapping
+    @PostMapping("account") - to create new account
+    @GetMapping("account/{id}") - get account by id
+    @GetMapping("accounts") - get all accounts
+    @PatchMapping("account/{id}") - modify account
+    @DeleteMapping("account/{id}") - delete account
+
+@Service -  interface as well as on class
+@Component
+@Autowired
+
+@PathVariable("id") - if we want to take parameter as apart of url
+@RequestBody ProductRequestDTO productRequestDTO - if we want to take paratament as a part og http request
+
